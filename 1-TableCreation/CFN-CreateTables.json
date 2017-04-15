@@ -1,0 +1,54 @@
+{
+  "Resources" : {
+    "JobTable" : {
+      "Type" : "AWS::DynamoDB::Table",
+      "Properties" : {
+        "TableName" : "Job",
+        "ProvisionedThroughput" : {"ReadCapacityUnits" : 1, "WriteCapacityUnits" : 1},
+        "KeySchema" :
+        [
+          {"AttributeName" : "CountryId", "KeyType" : "HASH"},
+          {"AttributeName" : "JobId", "KeyType" : "RANGE"}
+        ],
+        "AttributeDefinitions" :
+        [
+          {"AttributeName" : "CountryId", "AttributeType" : "S"},
+          {"AttributeName" : "JobId", "AttributeType" : "S"}
+        ]
+      }
+    },
+    "Application" : {
+      "Type" : "AWS::DynamoDB::Table",
+      "Properties" : {
+        "TableName" : "Applicant",
+        "ProvisionedThroughput" : {"ReadCapacityUnits" : 1, "WriteCapacityUnits" : 1},
+        "KeySchema" :
+        [
+          {"AttributeName" : "ApplicantId", "KeyType" : "HASH"}
+        ],
+        "AttributeDefinitions" :
+        [
+          {"AttributeName" : "ApplicantId", "AttributeType" : "S"}
+        ]
+      }
+    },
+    "JobApplication" : {
+      "Type" : "AWS::DynamoDB::Table",
+      "Properties" : {
+        "TableName" : "JobApplication",
+        "ProvisionedThroughput" : {"ReadCapacityUnits" : 1, "WriteCapacityUnits" : 1},
+        "KeySchema" :
+        [
+          {"AttributeName" : "JobId", "KeyType" : "HASH"},
+          {"AttributeName" : "ApplicantId", "KeyType" : "RANGE"}
+          
+        ],
+        "AttributeDefinitions" :
+        [
+          {"AttributeName" : "ApplicantId", "AttributeType" : "S"},
+          {"AttributeName" : "JobId", "AttributeType" : "S"}
+        ]
+      }
+    }
+  }
+}
