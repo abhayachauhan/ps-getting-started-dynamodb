@@ -1,9 +1,18 @@
 var AWS = require('aws-sdk');
+var print = require('./lib');
 
 var dynamodb = new AWS.DynamoDB();
 
+var currentEpochTime = Math.floor(new Date() / 1000);
+
 var params = {
     TableName: 'Job',
+    ExpressionAttributeValues: {
+      ":time": {
+        N: currentEpochTime.toString()
+      }
+    },
+    FilterExpression: "TimeClosing <= :time",
     // Limit: 10,
     ReturnConsumedCapacity: 'TOTAL'
 };
@@ -14,7 +23,7 @@ dynamodb.scan(params, function(err, data) {
     return;
   }
   // data.Items = [];
-  console.log(JSON.stringify(data, null, 4));
+  print(data);
 
 });
 

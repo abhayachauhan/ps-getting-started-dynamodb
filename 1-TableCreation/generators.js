@@ -25,7 +25,7 @@ function generateUniqueJob() {
       S: faker.name.jobType()
     },
     "JobDescription": {
-      S: faker.name.jobDescriptor()
+      S: faker.lorem.paragraphs(10)
     },
     "ClosingTime": {  
       N: faker.random.number({

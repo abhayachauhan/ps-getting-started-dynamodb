@@ -15,32 +15,37 @@ var params = {
   ReturnConsumedCapacity: "TOTAL", 
   TableName: "Job"
 };
+
 var createJob = dynamodb.putItem(params).promise();
 
-createJob.then(function(data) {
-    console.log(data);
-    var currentEpochTime = Math.floor(new Date() / 1000);
-    var params = {
-        ExpressionAttributeNames: {
-            "#C": "ClosingTime"
-        }, 
-        ExpressionAttributeValues: {
-            ":t": {
-                S: currentEpochTime.toString()
-                }
-        }, 
-        Key: {
-            JobId: job.JobId,
-            CountryId: job.CountryId
-        },
-        TableName: 'Job',
-        ReturnConsumedCapacity: "TOTAL",
-        ReturnItemCollectionMetrics: "SIZE",
-        ReturnValues: "ALL_NEW",
-        UpdateExpression: "SET #C = :t"
-    };
-    var updateJob = dynamodb.updateItem(params).promise();
+createJob
+    .then(console.log)
+    .then(function(data) {
 
-    updateJob
-        .then(console.log)
-});
+        var currentEpochTime = Math.floor(new Date() / 1000);
+
+        var params = {
+            ExpressionAttributeNames: {
+                "#C": "ClosingTime"
+            }, 
+            ExpressionAttributeValues: {
+                ":t": {
+                    S: currentEpochTime.toString()
+                    }
+            }, 
+            Key: {
+                JobId: job.JobId,
+                CountryId: job.CountryId
+            },
+            TableName: 'Job',
+            ReturnConsumedCapacity: "TOTAL",
+            ReturnItemCollectionMetrics: "SIZE",
+            ReturnValues: "ALL_NEW",
+            UpdateExpression: "SET #C = :t"
+        };
+
+        var updateJob = dynamodb.updateItem(params).promise();
+
+        updateJob
+            .then(console.log)
+    });

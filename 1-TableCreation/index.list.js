@@ -2,7 +2,7 @@ var AWS = require('aws-sdk');
 var print = require('./lib');
 
 var dynamodb = new AWS.DynamoDB();
-
+var tableArn = 'arn:aws:dynamodb:ap-southeast-2:428332548629:table/Job';
 
 function listTables() {
     console.log('List Tables: ');
@@ -41,7 +41,7 @@ function describeJobTable() {
 function tagJobTable() {
     console.log('Tag Job Table: ');
     var params = {
-        ResourceArn: 'arn:aws:dynamodb:ap-southeast-1:428332548629:table/Job',
+        ResourceArn: tableArn,
         Tags: [
             {
                 Key: 'Owner',
@@ -62,7 +62,7 @@ function tagJobTable() {
 function listTagsForJobTable() {
     console.log('List Tags for Job Table: ');
     var params = {
-        ResourceArn: 'arn:aws:dynamodb:ap-southeast-1:428332548629:table/Job'
+        ResourceArn: tableArn
     };
     var promise = new Promise(function (resolve, reject) {
         var tagsPromise = dynamodb.listTagsOfResource(params).promise();
@@ -78,7 +78,7 @@ function listTagsForJobTable() {
 function unTagJobTable() {
     console.log('Untag Job Table: ');
     var params = {
-        ResourceArn: 'arn:aws:dynamodb:ap-southeast-1:428332548629:table/Job',
+        ResourceArn: tableArn,
         TagKeys: [
             'Owner'
         ]
@@ -94,15 +94,36 @@ function unTagJobTable() {
 
 }
 
+function changeCapacityJobTable() {
+    console.log('Increasing capacity to 2 RU / 2 WU: ')
+    var params = {
+        ProvisionedThroughput: {
+            ReadCapacityUnits: 2, 
+            WriteCapacityUnits: 2
+        }, 
+        TableName: "Job"
+    };
+
+    var promise = new Promise(function (resolve, reject) {
+        var capacityPromise = dynamodb.updateTable(params).promise();
+        capacityPromise
+            .then(function() {
+                var params = { TableName: 'Job' };
+                console.log('Waiting for update to finish...');
+                return dynamodb.waitFor('tableExists', params).promise();
+            })
+            .then(print)
+            .then(resolve)
+            .catch(reject);
+    });
+    return promise;
+}
+
 listTables()
     .then(describeJobTable)
     .then(tagJobTable)
     .then(listTagsForJobTable)
     .then(unTagJobTable)
-    .then(listTagsForJobTable);
-
-
-
-
-
-
+    .then(listTagsForJobTable)
+    .then(changeCapacityJobTable)
+    .then(describeJobTable);
