@@ -1,5 +1,5 @@
 var AWS = require('aws-sdk');
-var gen = require('./generators');
+var gen = require('./../lib/generators');
 var faker = require('faker');
 
 var dynamodb = new AWS.DynamoDB({httpOptions: { timeout: 1500 }});//{httpOptions: { timeout: 500 }, maxRetries: 0});

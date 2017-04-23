@@ -1,0 +1,22 @@
+{
+  "name": "getting-started-with-dynamodb",
+  "version": "1.0.0",
+  "description": "Pluralsight Course for Getting started with DynamoDB",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@bitbucket.org/AbhayaChauhan/ps-dynamodbgettingstarted.git"
+  },
+  "author": "Abhaya Chauhan",
+  "license": "ISC",
+  "homepage": "https://bitbucket.org/AbhayaChauhan/ps-dynamodbgettingstarted#readme",
+  "dependencies": {
+    "ascii-progress": "^1.0.5",
+    "async": "^2.3.0",
+    "aws-sdk": "^2.45.0",
+    "faker": "^4.1.0"
+  }
+}

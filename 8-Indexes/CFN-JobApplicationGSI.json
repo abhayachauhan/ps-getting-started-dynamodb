@@ -49,7 +49,28 @@
           {"AttributeName" : "ApplicantId", "AttributeType" : "S"},
           {"AttributeName" : "JobId", "AttributeType" : "S"}
         ],
-        "LocalSecondaryIndexes" :[{
+        "GlobalSecondaryIndexes" : [{
+          "IndexName" : "ApplicantJobs",
+          "KeySchema" : [
+            {
+              "AttributeName" : "ApplicantId",
+              "KeyType" : "HASH"
+            },
+            {
+              "AttributeName" : "JobId",
+              "KeyType" : "RANGE"
+            }
+          ],                         
+          "Projection" : {
+            "NonKeyAttributes" : ["ApplicationForm","TimeApplied"],
+            "ProjectionType" : "INCLUDE"
+          },
+          "ProvisionedThroughput" : {
+            "ReadCapacityUnits" : "1",
+            "WriteCapacityUnits" : "1"
+          }
+        }],
+        "LocalSecondaryIndexes": [{
           "IndexName" : "JobApplicationScore",
           "KeySchema" : [
             {

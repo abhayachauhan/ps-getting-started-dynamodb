@@ -1,5 +1,5 @@
 var AWS = require('aws-sdk');
-var print = require('lib');
+var print = require('./../lib/helpers.js').printPretty;
 
 var params = {
     "RequestItems": {
@@ -39,5 +39,5 @@ var dynamodb = new AWS.DynamoDB();
 var promise = dynamodb.batchGetItem(params).promise()
 
 promise
-    .then(lib)
+    .then(print)
     .catch(console.log);

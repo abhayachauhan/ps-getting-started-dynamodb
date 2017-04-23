@@ -1,5 +1,5 @@
 var AWS = require('aws-sdk');
-var print = require('./lib');
+var lib = require('./../lib/helpers.js');
 
 var dynamodb = new AWS.DynamoDB();
 var tableArn = 'arn:aws:dynamodb:ap-southeast-2:428332548629:table/Job';
@@ -12,7 +12,7 @@ function listTables() {
         var listTable = dynamodb.listTables(params).promise();
 
         listTable
-            .then(print)
+            .then(lib.printPretty)
             .then(resolve)
             .catch(reject);
 
@@ -30,7 +30,7 @@ function describeJobTable() {
 
         
         descTable
-            .then(print)
+            .then(lib.printPretty)
             .then(resolve)
             .catch(reject);
 
@@ -52,7 +52,7 @@ function tagJobTable() {
     var promise = new Promise(function (resolve, reject) {
         var tagPromise = dynamodb.tagResource(params).promise();
         tagPromise
-            .then(print)
+            .then(lib.printPretty)
             .then(resolve)
             .catch(reject);
     });
@@ -67,7 +67,7 @@ function listTagsForJobTable() {
     var promise = new Promise(function (resolve, reject) {
         var tagsPromise = dynamodb.listTagsOfResource(params).promise();
         tagsPromise
-            .then(print)
+            .then(lib.printPretty)
             .then(resolve)
             .catch(reject);
     });
@@ -86,7 +86,7 @@ function unTagJobTable() {
     var promise = new Promise(function (resolve, reject) {
         var tagsPromise = dynamodb.untagResource(params).promise();
         tagsPromise
-            .then(print)
+            .then(lib.printPretty)
             .then(resolve)
             .catch(reject);
     });
@@ -112,7 +112,7 @@ function changeCapacityJobTable() {
                 console.log('Waiting for update to finish...');
                 return dynamodb.waitFor('tableExists', params).promise();
             })
-            .then(print)
+            .then(lib.printPretty)
             .then(resolve)
             .catch(reject);
     });

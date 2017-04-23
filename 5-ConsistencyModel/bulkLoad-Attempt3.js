@@ -1,12 +1,12 @@
 var AWS = require('aws-sdk');
-var gen = require('./generators');
+var gen = require('./../lib/generators');
 var async = require('async');
 var ProgressBar = require('ascii-progress');
 
 var dynamodb = new AWS.DynamoDB({httpOptions: { timeout: 1500 }, maxRetries: 0});
 
 // Generate data
-var allData = gen.generateAllData(100, 500);
+var allData = gen.generateAllData(1, 1000);
 
 var totalCapacityConsumed = {};
 var start = new Date;
@@ -16,14 +16,14 @@ var progressBars = {};
 // SETUP WORKLOADS
 
 var work = [].concat(
-    // function(done) { 
-    //     var tableName = 'Job';
-    //     setupWorkload(done, tableName);
-    // },
-    // function(done) { 
-    //     var tableName = 'Applicant';
-    //     setupWorkload(done, tableName);
-    // },
+    function(done) { 
+        var tableName = 'Job';
+        setupWorkload(done, tableName);
+    },
+    function(done) { 
+        var tableName = 'Applicant';
+        setupWorkload(done, tableName);
+    },
     function(done) { 
         var tableName = 'JobApplication';
         setupWorkload(done, tableName);

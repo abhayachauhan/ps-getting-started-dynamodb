@@ -1,6 +1,5 @@
 var AWS = require('aws-sdk');
 
-
 function getJobApplicationScore() {
   // Random number between 0 and 100 (inclusive)
   var min = Math.ceil(0);

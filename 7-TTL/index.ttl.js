@@ -1,5 +1,5 @@
 var AWS = require('aws-sdk');
-var print = require('./lib');
+var print = require('./../lib/helpers').printPretty;
 
 var dynamodb = new AWS.DynamoDB();
 
