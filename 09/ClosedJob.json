@@ -1,0 +1,111 @@
+{
+  "Resources" : {
+    "JobTable" : {
+      "Type" : "AWS::DynamoDB::Table",
+      "Properties" : {
+        "TableName" : "GMJS.Job",
+        "ProvisionedThroughput" : {"ReadCapacityUnits" : 1, "WriteCapacityUnits" : 1},
+        "KeySchema" :
+        [
+          {"AttributeName" : "CountryId", "KeyType" : "HASH"},
+          {"AttributeName" : "JobId", "KeyType" : "RANGE"}
+        ],
+        "AttributeDefinitions" :
+        [
+          {"AttributeName" : "CountryId", "AttributeType" : "S"},
+          {"AttributeName" : "JobId", "AttributeType" : "S"}
+        ]
+      }
+    },
+    "UserTable" : {
+      "Type" : "AWS::DynamoDB::Table",
+      "Properties" : {
+        "TableName" : "GMJS.User",
+        "ProvisionedThroughput" : {"ReadCapacityUnits" : 1, "WriteCapacityUnits" : 1},
+        "KeySchema" :
+        [
+          {"AttributeName" : "UserId", "KeyType" : "HASH"}
+        ],
+        "AttributeDefinitions" :
+        [
+          {"AttributeName" : "UserId", "AttributeType" : "S"}
+        ]
+      }
+    },
+    "JobApplicationTable" : {
+      "Type" : "AWS::DynamoDB::Table",
+      "Properties" : {
+        "TableName" : "GMJS.JobApplication",
+        "ProvisionedThroughput" : {"ReadCapacityUnits" : 1, "WriteCapacityUnits" : 1},
+        "KeySchema" :
+        [
+          {"AttributeName" : "JobId", "KeyType" : "HASH"},
+          {"AttributeName" : "UserId", "KeyType" : "RANGE"}
+          
+        ],
+        "AttributeDefinitions" :
+        [
+          {"AttributeName" : "UserId", "AttributeType" : "S"},
+          {"AttributeName" : "JobId", "AttributeType" : "S"},
+          {"AttributeName" : "Score", "AttributeType" : "N"},
+          {"AttributeName" : "TimeApplied", "AttributeType" : "N"}
+        ],
+        "GlobalSecondaryIndexes" : [{
+          "IndexName" : "UserJobs",
+          "KeySchema" : [
+            {
+              "AttributeName" : "UserId",
+              "KeyType" : "HASH"
+            },
+            {
+              "AttributeName" : "TimeApplied",
+              "KeyType" : "RANGE"
+            }
+          ],                         
+          "Projection" : {
+            "NonKeyAttributes" : [],
+            "ProjectionType" : "ALL"
+          },
+          "ProvisionedThroughput" : {
+            "ReadCapacityUnits" : "1",
+            "WriteCapacityUnits" : "1"
+          }
+        }],
+        "LocalSecondaryIndexes": [{
+          "IndexName" : "JobApplicationScore",
+          "KeySchema" : [
+            {
+              "AttributeName" : "JobId",
+              "KeyType" : "HASH"
+            },
+            {
+              "AttributeName" : "Score",
+              "KeyType" : "RANGE"
+            }
+          ],
+          "Projection" : {
+            "NonKeyAttributes" : [],
+            "ProjectionType" : "ALL"
+          }
+        }]
+      }
+    },
+    "ClosedJobTable" : {
+      "Type" : "AWS::DynamoDB::Table",
+      "Properties" : {
+        "TableName" : "GMJS.ClosedJob",
+        "ProvisionedThroughput" : {
+            "ReadCapacityUnits" : 1, "WriteCapacityUnits" : 1
+        },
+        "KeySchema" :
+        [
+          {"AttributeName" : "JobId", "KeyType" : "HASH"}
+        ],
+        "AttributeDefinitions" :
+        [
+          {"AttributeName" : "JobId", "AttributeType" : "S"}
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,72 @@
+{
+  "Resources" : {
+    "JobTable" : {
+      "Type" : "AWS::DynamoDB::Table",
+      "Properties" : {
+        "TableName" : "GMJS.Job",
+        "ProvisionedThroughput" : {"ReadCapacityUnits" : 1, "WriteCapacityUnits" : 500},
+        "KeySchema" :
+        [
+          {"AttributeName" : "CountryId", "KeyType" : "HASH"},
+          {"AttributeName" : "JobId", "KeyType" : "RANGE"}
+        ],
+        "AttributeDefinitions" :
+        [
+          {"AttributeName" : "CountryId", "AttributeType" : "S"},
+          {"AttributeName" : "JobId", "AttributeType" : "S"}
+        ]
+      }
+    },
+    "UserTable" : {
+      "Type" : "AWS::DynamoDB::Table",
+      "Properties" : {
+        "TableName" : "GMJS.User",
+        "ProvisionedThroughput" : {"ReadCapacityUnits" : 1, "WriteCapacityUnits" : 100},
+        "KeySchema" :
+        [
+          {"AttributeName" : "UserId", "KeyType" : "HASH"}
+        ],
+        "AttributeDefinitions" :
+        [
+          {"AttributeName" : "UserId", "AttributeType" : "S"}
+        ]
+      }
+    },
+    "JobApplicationTable" : {
+      "Type" : "AWS::DynamoDB::Table",
+      "Properties" : {
+        "TableName" : "GMJS.JobApplication",
+        "ProvisionedThroughput" : {"ReadCapacityUnits" : 1, "WriteCapacityUnits" : 500},
+        "KeySchema" :
+        [
+          {"AttributeName" : "JobId", "KeyType" : "HASH"},
+          {"AttributeName" : "UserId", "KeyType" : "RANGE"}
+          
+        ],
+        "AttributeDefinitions" :
+        [
+          {"AttributeName" : "Score", "AttributeType" : "N"},
+          {"AttributeName" : "UserId", "AttributeType" : "S"},
+          {"AttributeName" : "JobId", "AttributeType" : "S"}
+        ],
+        "LocalSecondaryIndexes": [{
+          "IndexName" : "JobApplicationScore",
+          "KeySchema" : [
+            {
+              "AttributeName" : "JobId",
+              "KeyType" : "HASH"
+            },
+            {
+              "AttributeName" : "Score",
+              "KeyType" : "RANGE"
+            }
+          ],
+          "Projection" : {
+            "NonKeyAttributes" : [],
+            "ProjectionType" : "ALL"
+          }
+        }]
+      }
+    }
+  }
+}
