@@ -1,6 +1,6 @@
 # AWS Developer: Getting Started with DynamoDB
 
-##Index
+## Index
 
 * application-score-trigger-policy.json: IAM Role Policy for Application Score Trigger
 * application-score-trigger.js: Lambda function code to calculate application score for each Job Application

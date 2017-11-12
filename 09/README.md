@@ -1,6 +1,6 @@
 # AWS Developer: Getting Started with DynamoDB
 
-##Index
+## Index
 
 * problemQuery.js: The problem query which is consuming a lot of RCUs.
 * index.ttl.js: Script to modify table to add a TTL attribute to the Job table.

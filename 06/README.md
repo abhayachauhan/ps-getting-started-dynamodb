@@ -1,6 +1,6 @@
 # AWS Developer: Getting Started with DynamoDB
 
-##Index
+## Index
 
 * 1-CreateItem.js: Using PutItem API
 * 2-UpdateItem.js: Partial update of an item using UpdateItem API

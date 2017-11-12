@@ -1,6 +1,6 @@
 # AWS Developer: Getting Started with DynamoDB
 
-##Index
+## Index
 
 * JobApplicationGSI.json: CloudFormation template for Global Secondary Index on Job Application table.
 * JobApplicationLSI.json: CloudFormation template for Local Secondary Index on Job Application table.

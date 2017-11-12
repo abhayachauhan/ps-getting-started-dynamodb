@@ -1,6 +1,6 @@
 # AWS Developer: Getting Started with DynamoDB
 
-##Index
+## Index
 
 * createTables.json: CloudFormation template to create tables
 * createTables.js: Create tables using DynamoDB SDK and APIs.
